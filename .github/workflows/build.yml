@@ -2,7 +2,6 @@ name: Build
 on:
   workflow_dispatch:
 
-
 jobs:
   build:
     name: Build
@@ -13,19 +12,41 @@ jobs:
         with:
           sparse-checkout: |
             META-INF
-          path: "output"
+          path: "meta"
+          ref: "1.7.0/main"
+
       - name: checkout resourcepack repository
         uses: actions/checkout@v6
         with:
           repository: "Complete-Cobblemon-Collection-Team/resourcepack"
           path: "resourcepack"
+          ref: "1.7.0/dev"
+
       - name: checkout datapack repository
         uses: actions/checkout@v6
         with:
           repository: "Complete-Cobblemon-Collection-Team/datapack"
           path: "datapack"
-      - name: assemble pack
+          ref: "1.7.0/dev"
+
+      - name: prepare 7-Zip
+        uses: milliewalky/setup-7-zip@v2
+
+      - name: assemble artifact
         run: |
+          mkdir output
+          cp meta/Credits.txt output/
+          cp meta/LICENSE output/
+          cp meta/pack.mcmeta output/
+          cp meta/pack.png output/
+          cp meta/fabric.mod.json output/
+          cp -r meta/META-INF output/META-INF
           cp -r resourcepack/assets output/assets
           cp -r datapack/data output/data
-          7z a -tzip CCC_2.0.0.jar -w output/.
+          7z a -tzip CCC_2.0.0.jar -w output/. -xr!.git
+
+      - name: upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: CCC
+          path: CCC_2.0.0.jar
