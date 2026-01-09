@@ -1,5 +1,5 @@
-modLoader = 'javafml'
-loaderVersion = '[40,)'
+modLoader = 'lowcodefml'
+loaderVersion = '[1,)'
 license = 'COMPLETE COBBLEMON COLLECTION: MYTHS AND LEGENDS COMPAT LICENSE v1.0'
 showAsResourcePack = true
 showAsDataPack = true
