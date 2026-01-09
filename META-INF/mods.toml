@@ -1,0 +1,22 @@
+modLoader = 'lowcodefml'
+loaderVersion = '[40,)'
+license = 'COMPLETE COBBLEMON COLLECTION: MYTHS AND LEGENDS COMPAT LICENSE v1.0'
+showAsResourcePack = true
+showAsDataPack = true
+
+[[mods]]
+modId = 'complete_cobblemon_collection'
+version = '2.0.0'
+displayName = 'Complete Cobblemon Collection'
+description = 'Complete Cobblemon Collection for Cobblemon 1.7.x'
+logoFile = 'cobblemon-journey-mounts_pack.png'
+credits = 'All the creators who made this possible :)'
+authors = 'Xcavalier'
+displayURL = 'https://modrinth.com/datapack/cobblemon-journey-mounts'
+
+[[dependencies.complete_cobblemon_collection]]
+modId = "cobblemon"
+type = "required"
+versionRange = "[1.7.0,)"
+ordering = "AFTER"
+side = "BOTH"

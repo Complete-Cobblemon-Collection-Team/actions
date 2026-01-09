@@ -1,0 +1,31 @@
+name: Build
+on:
+  workflow_dispatch:
+
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout actions repository
+        uses: actions/checkout@v6
+        with:
+          sparse-checkout: |
+            META-INF
+          path: "output"
+      - name: checkout resourcepack repository
+        uses: actions/checkout@v6
+        with:
+          repository: "Complete-Cobblemon-Collection-Team/resourcepack"
+          path: "resourcepack"
+      - name: checkout datapack repository
+        uses: actions/checkout@v6
+        with:
+          repository: "Complete-Cobblemon-Collection-Team/datapack"
+          path: "datapack"
+      - name: assemble pack
+        run: |
+          cp -r resourcepack/assets output/assets
+          cp -r datapack/data output/data
+          7z a -tzip CCC_2.0.0.jar -w output/.

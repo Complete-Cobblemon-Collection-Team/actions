@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "complete_cobblemon_collection",
+  "version": "2.0.0",
+  "name": "Complete Cobblemon Collection",
+  "description": "Complete Cobblemon Collection for Cobblemon 1.7.x",
+  "authors": ["Xcavalier"],
+  "contact": {
+    "homepage": "https://github.com/Complete-Cobblemon-Collection-Team"
+  },
+  "license": "COMPLETE COBBLEMON COLLECTION: MYTHS AND LEGENDS COMPAT LICENSE v1.0",
+  "icon": "pack.png",
+  "environment": "*",
+  "depends": {
+    "fabric-resource-loader-v0": "*",
+    "cobblemon": ">=1.7.0"
+  }
+}
