@@ -11,6 +11,8 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    env:
+      VERSION: ${{github.event.inputs.version}}
     steps:
       - name: checkout actions repository
         uses: actions/checkout@v6
@@ -43,24 +45,18 @@ jobs:
 
       - name: render pack version to fabric.mod.json
         uses: danielr1996/envsubst-action@1.0.0
-        env:
-          VERSION: ${{github.event.inputs.version}}
         with:
           input: 'meta/fabric.mod.json'
           output: 'output/fabric.mod.json'
 
       - name: render pack version to META-INF/neoforge.mods.toml
         uses: danielr1996/envsubst-action@1.0.0
-        env:
-          VERSION: ${{github.event.inputs.version}}
         with:
           input: 'meta/META-INF/neoforge.mods.toml'
           output: 'output/META-INF/neoforge.mods.toml'
 
       - name: render pack version to pack.mcmeta
         uses: danielr1996/envsubst-action@1.0.0
-        env:
-          VERSION: ${{github.event.inputs.version}}
         with:
           input: 'meta/pack.mcmeta'
           output: 'output/pack.mcmeta'
