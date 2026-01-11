@@ -1,6 +1,11 @@
 name: Build
 on:
   workflow_dispatch:
+    inputs:
+      version:
+        description: "Pack version"
+        required: true
+        type: string
 
 jobs:
   build:
@@ -32,21 +37,45 @@ jobs:
       - name: prepare 7-Zip
         uses: milliewalky/setup-7-zip@v2
 
+      - name: prepare output
+        run: |
+          mkdir -p output/META-INF
+
+      - name: render pack version to fabric.mod.json
+        uses: danielr1996/envsubst-action@1.0.0
+        env:
+          VERSION: ${{github.event.inputs.version}}
+        with:
+          input: 'meta/fabric.mod.json'
+          output: 'output/fabric.mod.json'
+
+      - name: render pack version to META-INF/neoforge.mods.toml
+        uses: danielr1996/envsubst-action@1.0.0
+        env:
+          VERSION: ${{github.event.inputs.version}}
+        with:
+          input: 'meta/META-INF/neoforge.mods.toml'
+          output: 'output/META-INF/neoforge.mods.toml'
+
+      - name: render pack version to pack.mcmeta
+        uses: danielr1996/envsubst-action@1.0.0
+        env:
+          VERSION: ${{github.event.inputs.version}}
+        with:
+          input: 'meta/pack.mcmeta'
+          output: 'output/pack.mcmeta'
+
       - name: assemble artifact
         run: |
-          mkdir output
           cp meta/Credits.txt output/
           cp meta/LICENSE output/
-          cp meta/pack.mcmeta output/
           cp meta/pack.png output/
-          cp meta/fabric.mod.json output/
-          cp -r meta/META-INF output/META-INF
           cp -r resourcepack/assets output/assets
           cp -r datapack/data output/data
-          7z a -tzip CCC_2.0.0.jar -w output/. -xr!.git
+          7z a -tzip CCC_$VERSION.jar -w output/. -xr!.git
 
       - name: upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: CCC
-          path: CCC_2.0.0.jar
+          path: "CCC_${{github.event.inputs.version}}.jar"

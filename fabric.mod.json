@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "complete_cobblemon_collection",
-  "version": "2.0.0",
+  "version": "${VERSION}",
   "name": "Complete Cobblemon Collection",
   "description": "Complete Cobblemon Collection for Cobblemon 1.7.x",
   "authors": ["Xcavalier"],
