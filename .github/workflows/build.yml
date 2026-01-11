@@ -61,7 +61,7 @@ jobs:
           input: 'meta/pack.mcmeta'
           output: 'output/pack.mcmeta'
 
-      - name: assemble artifact
+      - name: assemble artifacts
         run: |
           cp meta/Credits.txt output/
           cp meta/LICENSE output/
@@ -69,9 +69,16 @@ jobs:
           cp -r resourcepack/assets output/assets
           cp -r datapack/data output/data
           7z a -tzip CCC_$VERSION.jar -w output/. -xr!.git
+          7z a -tzip CCC_$VERSION_datapack.zip -w output/. -xr!.git -xr!assets
+          7z a -tzip CCC_$VERSION_resourcepack.zip -w output/. -xr!.git -xr!data
 
-      - name: upload artifact
-        uses: actions/upload-artifact@v4
+      - uses: marvinpinto/action-automatic-releases@latest
         with:
-          name: CCC
-          path: "CCC_${{github.event.inputs.version}}.jar"
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          prerelease: true
+          title: "Nightly"
+          files: |
+            output/CCC_$VERSION.jar
+            output/CCC_$VERSION_datapack.zip
+            output/CCC_$VERSION_resourcepack.zip
